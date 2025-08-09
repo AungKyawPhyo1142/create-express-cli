@@ -3,11 +3,14 @@ package generator
 import (
 	"bytes"
 	"fmt"
-	"io"
+
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	tmplFS "github.com/AungKyawPhyo1142/create-express-cli/internal/templates"
 )
 
 type Options struct {
@@ -18,12 +21,8 @@ type Options struct {
 }
 
 func Generate(opts Options) error {
-	srcPath := filepath.Join("templates", opts.Template)
+	srcPath := opts.Template
 	destPath := opts.ProjectName
-
-	if _, err := os.Stat(srcPath); os.IsNotExist(err) {
-		return fmt.Errorf("template '%s' not found", opts.Template)
-	}
 
 	if opts.DryRun {
 		fmt.Println("[Dry Run] Would create project at: ", destPath)
@@ -36,23 +35,44 @@ func Generate(opts Options) error {
 	}
 
 	// copy files from template
-	return filepath.Walk(srcPath, func(path string, info os.FileInfo, err error) error {
+	return fs.WalkDir(tmplFS.Templates, srcPath, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
 		relPath, _ := filepath.Rel(srcPath, path)
 		target := filepath.Join(destPath, relPath)
 
-		if info.IsDir() {
+		if d.IsDir() {
 			return os.MkdirAll(target, 0755)
 		}
 
-		return renderOrCopyFile(path, target, opts)
+		return renderOrCopyEmbeddedFile(path, target, opts)
 
 	})
 
 }
 
+func renderOrCopyEmbeddedFile(src, dst string, opts Options) error {
+	content, err := tmplFS.Templates.ReadFile(src)
+	if err != nil {
+		return err
+	}
+
+	if strings.Contains(string(content), "{{") {
+		tmpl, err := template.New(filepath.Base(src)).Parse(string(content))
+		if err != nil {
+			return err
+		}
+		var buf bytes.Buffer
+		if err := tmpl.Execute(&buf, opts); err != nil {
+			return fmt.Errorf("template execute error in %s: %w", src, err)
+		}
+		return os.WriteFile(dst, buf.Bytes(), 0644)
+	}
+	return os.WriteFile(dst, content, 0644)
+}
+
+/*
 func renderOrCopyFile(src, dst string, opts Options) error {
 	content, err := os.ReadFile(src)
 	if err != nil {
@@ -94,3 +114,4 @@ func copyFile(src, dst string) error {
 	return err
 
 }
+*/
