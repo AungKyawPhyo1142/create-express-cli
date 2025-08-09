@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/AungKyawPhyo1142/create-express-cli/internal/generator"
 	"github.com/spf13/cobra"
 )
 
@@ -33,12 +34,20 @@ express-cli create myapp --template express-jwt --pm npm`,
 			return
 		}
 
-		fmt.Println("Creating project with:")
-		fmt.Println("  Name       :", projectName)
-		fmt.Println("  Template   :", template)
-		fmt.Println("  PackageMgr :", packageMgr)
-		fmt.Println("  No Install :", noInstall)
-		fmt.Println("  Dry Run    :", dryRun)
+		opts := generator.Options{
+			ProjectName: projectName,
+			Template:    template,
+			NoInstall:   noInstall,
+			DryRun:      dryRun,
+		}
+
+		if err := generator.Generate(opts); err != nil {
+			fmt.Println("Error creating project:", err)
+			return
+		}
+
+		fmt.Println("Project created successfully")
+
 	},
 }
 
