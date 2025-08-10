@@ -1,0 +1,80 @@
+# .goreleaser.yml
+# See https://goreleaser.com/intro/ for more information
+
+version: 2
+
+# This section is for the GoReleaser Pro offering, which we are not using
+# so we will leave it empty.
+pro:
+  # Leave this empty for the free version
+  
+before:
+  hooks:
+    # You can remove this entire section if you don't need it.
+    - go mod tidy
+
+builds:
+  - # Each entry in this section is a build configuration.
+    # You can have multiple entries, e.g. for different binaries.
+    
+    # ID of the build.
+    # Default is the executable name.
+    id: "create-express-cli"
+
+    # Path to the main package.
+    # Default is `.`.
+    main: .
+
+    # Binary name.
+    # Default is the name of the project directory.
+    binary: create-express-cli
+
+    # GOOS (operating systems) to build for.
+    # By default, GoReleaser will build for all supported GOOS.
+    goos:
+      - linux
+      - windows
+      - darwin # macOS
+
+    # GOARCH (architectures) to build for.
+    # By default, GoReleaser will build for all supported GOARCH.
+    goarch:
+      - amd64
+      - arm64
+
+archives:
+  - # Each entry in this section is an archive configuration.
+    # You can have multiple entries, e.g. for different formats.
+    
+    # ID of the archive.
+    # Default is the project name.
+    id: "create-express-cli"
+
+    # Format of the archive.
+    # Can be `tar.gz`, `zip`, or `binary`.
+    # `binary` is only available in GoReleaser Pro.
+    format: tar.gz
+
+    # You can have a single file in your archive, or multiple.
+    # In this case, we have a single file, which is the binary.
+    # You can also add other files, e.g. README, LICENSE, etc.
+    files:
+      - README.md
+      - LICENSE # Make sure you have a LICENSE file
+
+# This section configures the release on GitHub.
+release:
+  # The repository to release to.
+  # Default is the repository from which the build is running.
+  github:
+    owner: AungKyawPhyo1142
+    name: create-express-cli # Change this
+
+  # If set to true, GoReleaser will not create a release on GitHub.
+  # This is useful for testing.
+  # Default is false.
+  draft: true # Set to false when you are ready to publish a real release
+
+# This section configures the changelog generation.
+changelog:
+  disable:  true
