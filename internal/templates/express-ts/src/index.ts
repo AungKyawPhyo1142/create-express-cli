@@ -9,6 +9,7 @@ import networkLog from './middlewares/network-log';
 import gateway from './routes/gateway';
 import { NotFoundError } from './utils/errors';
 import expressListRoutes from 'express-list-routes';
+import errorHandler from './middlewares/error-handler';
 
 logger.info('Application is starting...');
 
@@ -39,6 +40,8 @@ app.use(gateway);
 app.use((_req, _res, next) => {
     return next(new NotFoundError('Endpoint not found'));
 });
+
+app.use(errorHandler)
 
 app.listen(ENV.PORT, () => {
     logger.verbose(
