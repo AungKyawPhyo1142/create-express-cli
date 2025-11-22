@@ -215,6 +215,7 @@ func RunProgressWithCallback(fn func(ProgressCallback) error) error {
 	p := tea.NewProgram(m, tea.WithAltScreen())
 
 	done := make(chan error, 1)
+	var workErr error
 
 	// Run the actual work in a goroutine
 	go func() {
@@ -227,10 +228,10 @@ func RunProgressWithCallback(fn func(ProgressCallback) error) error {
 
 	// Wait for completion or error
 	go func() {
-		err := <-done
-		if err != nil {
+		workErr = <-done
+		if workErr != nil {
 			// Send error message
-			p.Send(stepMsg{step: StepComplete, message: fmt.Sprintf("Error: %v", err)})
+			p.Send(stepMsg{step: StepComplete, message: fmt.Sprintf("Error: %v", workErr)})
 			time.Sleep(1 * time.Second)
 		} else {
 			// Mark as complete
@@ -244,13 +245,7 @@ func RunProgressWithCallback(fn func(ProgressCallback) error) error {
 	if err != nil {
 		return err
 	}
-	
-	// Check if there was an error in the work
-	select {
-	case err := <-done:
-		return err
-	default:
-		return nil
-	}
-}
 
+	// Return the error from the work function
+	return workErr
+}
