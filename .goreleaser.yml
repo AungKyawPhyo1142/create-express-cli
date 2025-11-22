@@ -73,7 +73,7 @@ release:
   # If set to true, GoReleaser will not create a release on GitHub.
   # This is useful for testing.
   # Default is false.
-  draft: true # Set to false when you are ready to publish a real release
+  draft: false # Set to false when you are ready to publish a real release
 
 # This section configures the changelog generation.
 changelog:
