@@ -9,7 +9,7 @@
 
 A Golang-powered CLI tool to instantly scaffold a ready-to-use **Express.js** application — with optional **TypeScript** support — so you can skip repetitive setup and jump straight into coding.
 
-# Motivation behind this project
+# Motivation
 I’m way too lazy to set up the same Express project every time.  
 So instead of doing `npm init` + installing packages + writing the same boilerplate for the millionth time,
 I made this.
@@ -20,8 +20,6 @@ I made this.
 - Automatic `npm install` after scaffolding.
 - Supports multiple templates (`express-basic`, `express-ts`).
 - Clean and maintainable Golang CLI architecture.
-
-
 
 ## Quck Start
 
