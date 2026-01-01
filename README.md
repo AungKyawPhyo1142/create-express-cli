@@ -14,7 +14,7 @@ I’m way too lazy to set up the same Express project every time.
 So instead of doing `npm init` + installing packages + writing the same boilerplate for the millionth time,
 I made this.
 
-## 🚀 Features
+## Features
 - Generate a **JavaScript** or **TypeScript** Express app in seconds.
 - Preconfigured middleware, routes, and project structure.
 - Automatic `npm install` after scaffolding.
@@ -23,7 +23,7 @@ I made this.
 
 
 
-## 📦 Quck Start (Recommended)
+## Quck Start (Recommended)
 
 The easiest way to use `create-express-app` is with `npx`, which comes bundled with Node.js.
 
@@ -44,7 +44,7 @@ cd my-awesome-project
 npm run dev
 ```
 
-# 🛠️ Contributing
+# Contributing
 Interested in contributing to this project? I'd love to have you!
 
 To get started, clone this repository and build the project from source.
@@ -57,5 +57,5 @@ cd create-express-cli
 go build
 ```
 
-# 📜 License
+# License
 This project is open source and licensed under the MIT License.
