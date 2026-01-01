@@ -23,7 +23,7 @@ I made this.
 
 
 
-## Quck Start (Recommended)
+## Quck Start
 
 The easiest way to use `create-express-app` is with `npx`, which comes bundled with Node.js.
 
