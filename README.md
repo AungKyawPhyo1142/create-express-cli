@@ -23,7 +23,7 @@ I made this.
 
 
 
-## 📦 Getting Started (Recommended)
+## 📦 Quck Start (Recommended)
 
 The easiest way to use `create-express-app` is with `npx`, which comes bundled with Node.js.
 
@@ -44,7 +44,7 @@ cd my-awesome-project
 npm run dev
 ```
 
-# 🛠️ Development & Contributing
+# 🛠️ Contributing
 Interested in contributing to this project? I'd love to have you!
 
 To get started, clone this repository and build the project from source.
